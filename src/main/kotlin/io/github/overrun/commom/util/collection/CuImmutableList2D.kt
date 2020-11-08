@@ -22,37 +22,25 @@
  * SOFTWARE.
  */
 
-package io.github.overrun.commom.util.collection;
+package io.github.overrun.commom.util.collection
 
-import io.github.overrun.commom.util.annotation.CuSince;
+import io.github.overrun.commom.util.map.CuPos2ObjectMap
 
 /**
  * @author squid233
- * @since 2020/11/07
+ * @since 2020/11/08
  */
-@CuSince("0.1.0")
-public interface List2D<T> extends Iterable<T> {
-    T get(int x, int y);
+internal class CuImmutableList2D<T> : CuAbstractList2D<T>() {
+    private val entries = CuPos2ObjectMap<T>()
 
-    List2D<T> set(int x, int y, T t);
+    override fun isEmpty(): Boolean = entries.isEmpty()
 
-    List2D<T> add(int y, T t);
+    override fun contains(t: T): Boolean = entries.containsValue(t)
 
-    List2D<T> add(int y, int x, T t);
-
-    List2D<T> clear();
-
-    List2D<T> remove(int y);
-
-    List2D<T> remove(int y, int x);
-
-    boolean isEmpty();
-
-    boolean contains(T t);
-
-    boolean contains(int y, T t);
-
-    static <T> List2D<T> of() {
-        return new ImmutableList2D<>();
+    override fun contains(y: Int, t: T): Boolean {
+        val map = entries.retainAll(y)
+        return map.containsValue(t)
     }
+
+    override fun get(x: Int, y: Int): T? = entries[x, y]
 }

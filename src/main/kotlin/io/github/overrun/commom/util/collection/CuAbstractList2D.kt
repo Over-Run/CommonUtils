@@ -22,51 +22,33 @@
  * SOFTWARE.
  */
 
-package io.github.overrun.commom.util.collection;
+package io.github.overrun.commom.util.collection
 
-import io.github.overrun.commom.util.annotation.CuApi;
-import io.github.overrun.commom.util.annotation.CuSince;
+import io.github.overrun.commom.util.annotation.CuApi
 
 /**
  * @author squid233
  * @since 2020/11/07
  */
-@CuSince("0.1.0")
-@CuApi(status = CuApi.Status.EXPERIMENTAL)
-public class ObjectList2D<T> extends AbstractList2D<T> {
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
+@CuApi(status = [CuApi.Status.EXPERIMENTAL], since = "0.1.0")
+abstract class CuAbstractList2D<T> : CuList2D<T> {
+    override fun get(x: Int, y: Int): T? = throw UnsupportedOperationException()
 
-    @Override
-    public boolean contains(T t) {
-        return false;
-    }
+    override fun get(x: Int, y: Int, defaultValue: T): T = get(x, y) ?: defaultValue
 
-    @Override
-    public boolean contains(int y, T t) {
-        return false;
-    }
+    override fun set(x: Int, y: Int, t: T): CuList2D<T> = throw UnsupportedOperationException()
 
-    public static class SimpleEntry<T> extends AbstractList2D.Entry<T> {
-        private final int x;
-        private final int y;
-        private final T entry;
+    override fun clear(): CuList2D<T> = throw UnsupportedOperationException()
 
-        public SimpleEntry(int x, int y, T entry) {
-            this.x = x;
-            this.y = y;
-            this.entry = entry;
-        }
+    override fun remove(y: Int): CuList2D<T> = throw UnsupportedOperationException()
 
-        @Override
-        public int getX() { return x; }
+    override fun remove(x: Int, y: Int): CuList2D<T> = throw UnsupportedOperationException()
 
-        @Override
-        public int getY() { return y; }
+    override fun iterator(): Iterator<T> = throw UnsupportedOperationException()
 
-        @Override
-        public T getEntry() { return entry; }
+    abstract class Entry<T> {
+        abstract val x: Int
+        abstract val y: Int
+        abstract val entry: T
     }
 }

@@ -22,20 +22,35 @@
  * SOFTWARE.
  */
 
-package io.github.overrun.commonutils;
+package io.github.overrun.commom.util.collection
 
-import io.github.overrun.commom.util.collection.CuCollections;
-import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
+import io.github.overrun.commom.util.annotation.CuApi
 
 /**
  * @author squid233
  * @since 2020/11/07
  */
-public class CuTest {
-    @Test
-    void arr() {
-        System.out.println(Arrays.toString(CuCollections.INSTANCE.arrayOf("1","2","12904")));
+@CuApi(status = [CuApi.Status.EXPERIMENTAL], since = "0.1.0")
+interface CuList2D<T> : Iterable<T> {
+    operator fun get(x: Int, y: Int): T?
+
+    operator fun get(x: Int, y: Int, defaultValue: T): T
+
+    operator fun set(x: Int, y: Int, t: T): CuList2D<T>
+
+    fun clear(): CuList2D<T>
+
+    fun remove(y: Int): CuList2D<T>
+
+    fun remove(x: Int, y: Int): CuList2D<T>
+
+    fun isEmpty(): Boolean
+
+    operator fun contains(t: T): Boolean
+
+    fun contains(y: Int, t: T): Boolean
+
+    fun <T> of(): CuList2D<T> {
+        return CuImmutableList2D()
     }
 }

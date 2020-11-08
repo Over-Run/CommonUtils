@@ -22,36 +22,20 @@
  * SOFTWARE.
  */
 
-package io.github.overrun.commom.util.collection;
-
-import io.github.overrun.commom.util.annotation.CuSince;
+package io.github.overrun.commom.util.annotation
 
 /**
  * @author squid233
  * @since 2020/11/07
  */
-@CuSince("0.1.0")
-public final class CuCollections {
-    /**
-     * Create an array by concise method.<br>
-     * When a method need a param of array, you may be input this:
-     * {@code new Object[]{this, this}},
-     * but if you use this method, you can call it like this example:
-     * {@code arrayOf(this, this)}.
-     *
-     * @param t   Objects for array.
-     * @param <T> Objects type.
-     * @return An array.
-     */
-    @CuSince("0.1.0")
-    @SafeVarargs
-    public static <T> T[] arrayOf(T... t) { return t; }
+@CuApi(since = "0.1.0")
+@Retention(AnnotationRetention.SOURCE)
+annotation class CuApi(val status: Array<Status> = [Status.STABLE], val since: String = "", val causes: String = "") {
+    enum class Status {
+        INTERNAL, DEPRECATED, EXPERIMENTAL, REMOVAL, STABLE;
 
-    /**
-     * @param i Numbers.
-     * @return Int array.
-     * @see CuCollections#arrayOf(Object[])
-     */
-    @CuSince("0.1.0")
-    public static int[] intArrayOf(int... i) { return i; }
+        override fun toString(): String {
+            return "Api status: $name"
+        }
+    }
 }

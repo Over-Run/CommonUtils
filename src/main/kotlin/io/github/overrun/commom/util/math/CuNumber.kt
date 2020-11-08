@@ -22,45 +22,25 @@
  * SOFTWARE.
  */
 
-package io.github.overrun.commom.util.collection;
+package io.github.overrun.commom.util.math
 
-import io.github.overrun.commom.util.annotation.CuSince;
-import io.github.overrun.commom.util.map.Pos2ObjectMap;
-
-import java.io.Serializable;
+import io.github.overrun.commom.util.annotation.CuApi
 
 /**
  * @author squid233
  * @since 2020/11/07
  */
-@CuSince("0.1.0")
-public final class ImmutableList2D<T> extends AbstractList2D<T> implements Serializable {
-    private final Pos2ObjectMap<T> entries;
+@CuApi(since = "0.1.0")
+abstract class CuNumber : Number() {
+    override fun toByte(): Byte = toInt().toByte()
 
-    public ImmutableList2D() {
-        entries = Pos2ObjectMap.of();
-    }
+    override fun toChar(): Char = toInt().toChar()
 
-    @Override
-    public boolean isEmpty() {
-        return entries.isEmpty();
-    }
+    override fun toDouble(): Double = toInt().toDouble()
 
-    @Override
-    public boolean contains(T t) {
-        return entries.containsValue(t);
-    }
+    override fun toFloat(): Float = toInt().toFloat()
 
-    @Override
-    public boolean contains(int y, T t) {
-        Pos2ObjectMap<T> map = entries.retainAll(y);
-        return map.containsValue(t);
-    }
+    override fun toLong(): Long = toInt().toLong()
 
-    @Override
-    public T get(int x, int y) {
-        return entries.get(x, y);
-    }
-
-    private static final long serialVersionUID = 1L;
+    override fun toShort(): Short = toInt().toShort()
 }

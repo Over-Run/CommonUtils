@@ -21,33 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package io.github.overrun.commom.util.collection
 
-package io.github.overrun.commom.util.annotation;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import io.github.overrun.commom.util.annotation.CuApi
 
 /**
  * @author squid233
  * @since 2020/11/07
  */
-@CuSince("0.1.0")
-@Retention(RetentionPolicy.SOURCE)
-public @interface CuApi {
-    @CuSince("0.1.0")
-    Status status() default Status.STABLE;
+@CuApi(since = "0.1.0")
+object CuCollections {
+    /**
+     * Create an array by concise method.<br/>
+     * When a method need a param of array, you may be input this:
+     * `new Object[]{this, this}`,
+     * but if you use this method, you can call it like this example:
+     * `arrayOf(this, this)`.<br/>
+     * <b>For Kotlin developers: </b>Use {@link Library#arrayOf} instead.
+     *
+     * @param t   Objects for array.
+     * @param <T> Objects type.
+     * @return An array.
+    </T> */
+    @SafeVarargs
+    fun <T> arrayOf(vararg t: T): Array<out T> {
+        return t
+    }
 
-    @CuSince("0.1.0")
-    enum Status {
-        INTERNAL,
-        DEPRECATED,
-        EXPERIMENTAL,
-        REMOVAL,
-        STABLE;
-
-        @Override
-        public String toString() {
-            return "Api status: " + name();
-        }
+    /**
+     * @param i Numbers.
+     * @return Int array.
+     * @see CuCollections.arrayOf
+     */
+    fun intArrayOf(vararg i: Int): IntArray {
+        return i
     }
 }

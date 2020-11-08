@@ -22,22 +22,12 @@
  * SOFTWARE.
  */
 
-package io.github.overrun.commom.util.annotation;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+package io.github.overrun.commom.util.annotation
 
 /**
- * Mark something as a version since.<br>
- * <b>For common-utils developers: </b> You must add this annotation to a thing.
- *
  * @author squid233
  * @since 2020/11/07
  */
-@CuSince("0.1.0")
-@CuApi(status = CuApi.Status.STABLE)
-@Retention(RetentionPolicy.SOURCE)
-public @interface CuSince {
-    @CuSince("0.1.0")
-    String value() default "";
-}
+@CuApi(status = [CuApi.Status.DEPRECATED])
+@Retention(AnnotationRetention.SOURCE)
+annotation class CuSince(val value: String = "")
