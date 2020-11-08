@@ -22,21 +22,20 @@
  * SOFTWARE.
  */
 
-package io.github.overrun.commonutils;
-
-import io.github.overrun.common.util.logging.CuDefaultLoggerExt;
-import io.github.overrun.common.util.logging.CuLogManager;
+package io.github.overrun.common.util.annotation
 
 /**
  * @author squid233
  * @since 2020/11/07
  */
-public class CuTest {
-    static CuDefaultLoggerExt l = CuLogManager.INSTANCE.getLogger();
-    public static void main(String[] args) {
-        l.info("Test passed");
-        l.debug("Debugging");
-        CuLogManager.INSTANCE.setDebugging(true);
-        l.debug("Debugging visible");
+@CuApi(since = "0.1.0")
+@Retention(AnnotationRetention.SOURCE)
+annotation class CuApi(val status: Array<Status> = [Status.STABLE], val since: String = "", val causes: String = "") {
+    enum class Status {
+        INTERNAL, DEPRECATED, EXPERIMENTAL, REMOVAL, STABLE;
+
+        override fun toString(): String {
+            return "Api status: $name"
+        }
     }
 }

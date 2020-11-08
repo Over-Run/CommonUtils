@@ -22,33 +22,20 @@
  * SOFTWARE.
  */
 
-package io.github.overrun.commom.util.collection
+package io.github.overrun.common.util.logging
 
-import io.github.overrun.commom.util.annotation.CuApi
+import io.github.overrun.common.util.annotation.CuApi
 
-/**
- * @author squid233
- * @since 2020/11/07
- */
-@CuApi(status = [CuApi.Status.EXPERIMENTAL], since = "0.1.0")
-abstract class CuAbstractList2D<T> : CuList2D<T> {
-    override fun get(x: Int, y: Int): T? = throw UnsupportedOperationException()
+@CuApi(since = "0.1.0")
+object CuLogManager {
+    var debugging = false
 
-    override fun get(x: Int, y: Int, defaultValue: T): T = get(x, y) ?: defaultValue
+    fun getLogger(name: String?): CuDefaultLoggerExt = CuDefaultLoggerExt(name)
 
-    override fun set(x: Int, y: Int, t: T): CuList2D<T> = throw UnsupportedOperationException()
+    fun getLogger(clazz: Class<*>): CuDefaultLoggerExt = getLogger(clazz.simpleName)
 
-    override fun clear(): CuList2D<T> = throw UnsupportedOperationException()
-
-    override fun remove(y: Int): CuList2D<T> = throw UnsupportedOperationException()
-
-    override fun remove(x: Int, y: Int): CuList2D<T> = throw UnsupportedOperationException()
-
-    override fun iterator(): Iterator<T> = throw UnsupportedOperationException()
-
-    abstract class Entry<T> {
-        abstract val x: Int
-        abstract val y: Int
-        abstract val entry: T
+    fun getLogger(): CuDefaultLoggerExt {
+        val s = Throwable().stackTrace[1].className.split('.')
+        return getLogger(s[s.size - 1])
     }
 }

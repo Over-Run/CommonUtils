@@ -21,39 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.github.overrun.commom.util.collection
 
-import io.github.overrun.commom.util.annotation.CuApi
+package io.github.overrun.common.util.logging
+
+import io.github.overrun.common.util.annotation.CuApi
 
 /**
+ * You can implement your logger yourself.
  * @author squid233
- * @since 2020/11/07
+ * @since 2020/11/08
  */
 @CuApi(since = "0.1.0")
-object CuCollections {
-    /**
-     * Create an array by concise method.<br/>
-     * When a method need a param of array, you may be input this:
-     * `new Object[]{this, this}`,
-     * but if you use this method, you can call it like this example:
-     * `arrayOf(this, this)`.<br/>
-     * <b>For Kotlin developers: </b>Use {@link Library#arrayOf} instead.
-     *
-     * @param t   Objects for array.
-     * @param <T> Objects type.
-     * @return An array.
-    </T> */
-    @SafeVarargs
-    fun <T> arrayOf(vararg t: T): Array<out T> {
-        return t
-    }
+interface CuLogger {
+    fun info(msg: String?)
+    fun info(msg: String?, vararg params: Any?)
 
-    /**
-     * @param i Numbers.
-     * @return Int array.
-     * @see CuCollections.arrayOf
-     */
-    fun intArrayOf(vararg i: Int): IntArray {
-        return i
-    }
+    fun warn(msg: String?)
+    fun warn(msg: String?, vararg params: Any?)
+
+    fun error(msg: String?)
+    fun error(msg: String?, vararg params: Any?)
+
+    fun fatal(msg: String?)
+    fun fatal(msg: String?, vararg params: Any?)
+
+    fun debug(msg: String?)
+    fun debug(msg: String?, vararg params: Any?)
+
+    val name: String?
 }

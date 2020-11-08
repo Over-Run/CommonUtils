@@ -22,9 +22,9 @@
  * SOFTWARE.
  */
 
-package io.github.overrun.commom.util.math
+package io.github.overrun.common.util.math
 
-import io.github.overrun.commom.util.annotation.CuApi
+import io.github.overrun.common.util.annotation.CuApi
 
 /**
  * @author squid233

@@ -22,20 +22,25 @@
  * SOFTWARE.
  */
 
-package io.github.overrun.commom.util.annotation
+package io.github.overrun.common.util.math
+
+import io.github.overrun.common.util.annotation.CuApi
 
 /**
  * @author squid233
  * @since 2020/11/07
  */
 @CuApi(since = "0.1.0")
-@Retention(AnnotationRetention.SOURCE)
-annotation class CuApi(val status: Array<Status> = [Status.STABLE], val since: String = "", val causes: String = "") {
-    enum class Status {
-        INTERNAL, DEPRECATED, EXPERIMENTAL, REMOVAL, STABLE;
+abstract class CuNumber : Number() {
+    override fun toByte(): Byte = toInt().toByte()
 
-        override fun toString(): String {
-            return "Api status: $name"
-        }
-    }
+    override fun toChar(): Char = toInt().toChar()
+
+    override fun toDouble(): Double = toInt().toDouble()
+
+    override fun toFloat(): Float = toInt().toFloat()
+
+    override fun toLong(): Long = toInt().toLong()
+
+    override fun toShort(): Short = toInt().toShort()
 }

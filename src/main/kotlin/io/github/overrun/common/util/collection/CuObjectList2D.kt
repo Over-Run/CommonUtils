@@ -22,10 +22,10 @@
  * SOFTWARE.
  */
 
-package io.github.overrun.commom.util.collection
+package io.github.overrun.common.util.collection
 
-import io.github.overrun.commom.util.annotation.CuApi
-import io.github.overrun.commom.util.map.CuPos2ObjectMap
+import io.github.overrun.common.util.annotation.CuApi
+import io.github.overrun.common.util.map.CuPos2ObjectMap
 
 /**
  * @author squid233
@@ -33,51 +33,42 @@ import io.github.overrun.commom.util.map.CuPos2ObjectMap
  */
 @CuApi(status = [CuApi.Status.EXPERIMENTAL], since = "0.1.0")
 open class CuObjectList2D<T> : CuAbstractList2D<T>() {
-    private val entries = CuPos2ObjectMap<T>()
+    private val _entries = CuPos2ObjectMap<T>()
 
-    override fun isEmpty(): Boolean = entries.isEmpty()
+    override fun isEmpty(): Boolean = _entries.isEmpty()
 
-    override fun contains(t: T): Boolean = entries.containsValue(t)
+    override fun contains(t: T): Boolean = _entries.containsValue(t)
 
     override fun contains(y: Int, t: T): Boolean {
-        val map = entries.retainAll(y)
+        val map = _entries.retainAll(y)
         return map.containsValue(t)
     }
 
     override fun remove(x: Int, y: Int): CuList2D<T> {
-        entries.remove(x, y)
+        _entries.remove(x, y)
         return this
     }
 
     override fun clear(): CuList2D<T> {
-        entries.clear()
+        _entries.clear()
         return this
     }
 
     override fun remove(y: Int): CuList2D<T> {
-        entries.removeAll(y)
+        _entries.removeAll(y)
         return this
     }
 
-    override fun iterator(): Iterator<T> =
-            object : Iterator<T> {
-                private var nextId = 0
+    override fun iterator(): Iterator<T> = _entries.values.iterator()
 
-                override fun hasNext(): Boolean = entries.size > nextId
-
-                override fun next(): T {
-                    TODO("Not implemented yet")
-                }
-            }
-
-    override fun get(x: Int, y: Int): T? = entries[x, y]
+    override fun get(x: Int, y: Int): T? = _entries[x, y]
 
     override fun set(x: Int, y: Int, t: T): CuList2D<T> {
-        entries.put(x, y, t)
+        _entries.put(x, y, t)
         return this
     }
 
     class SimpleEntry<T>(override val x: Int,
                          override val y: Int,
-                         override val entry: T) : CuAbstractList2D.Entry<T>()
+                         override val entry: T) : Entry<T>()
 }

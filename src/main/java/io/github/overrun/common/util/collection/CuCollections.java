@@ -22,25 +22,30 @@
  * SOFTWARE.
  */
 
-package io.github.overrun.commom.util.math
-
-import io.github.overrun.commom.util.annotation.CuApi
+package io.github.overrun.common.util.collection;
 
 /**
  * @author squid233
- * @since 2020/11/07
+ * @since 2020/11/08
  */
-@CuApi(since = "0.1.0")
-abstract class CuNumber : Number() {
-    override fun toByte(): Byte = toInt().toByte()
+public class CuCollections {
+    /**
+     * Create an array by concise method.<br>
+     * When a method need a param of array, you may be input this:
+     * `new Object[]{this, this}`,
+     * but if you use this method, you can call it like this example:
+     * `arrayOf(this, this)`.<br>
+     *
+     * @param t   Objects for array.
+     * @param <T> Objects type.
+     * @return An array.
+    </T> */
+    @SafeVarargs
+    public static <T> T[] arrayOf(T... t) {
+        return t;
+    }
 
-    override fun toChar(): Char = toInt().toChar()
-
-    override fun toDouble(): Double = toInt().toDouble()
-
-    override fun toFloat(): Float = toInt().toFloat()
-
-    override fun toLong(): Long = toInt().toLong()
-
-    override fun toShort(): Short = toInt().toShort()
+    public static int[] intArrayOf(int... i) {
+        return i;
+    }
 }

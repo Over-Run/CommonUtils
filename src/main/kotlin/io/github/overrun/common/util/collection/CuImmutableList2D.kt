@@ -22,35 +22,25 @@
  * SOFTWARE.
  */
 
-package io.github.overrun.commom.util.collection
+package io.github.overrun.common.util.collection
 
-import io.github.overrun.commom.util.annotation.CuApi
+import io.github.overrun.common.util.map.CuPos2ObjectMap
 
 /**
  * @author squid233
- * @since 2020/11/07
+ * @since 2020/11/08
  */
-@CuApi(status = [CuApi.Status.EXPERIMENTAL], since = "0.1.0")
-interface CuList2D<T> : Iterable<T> {
-    operator fun get(x: Int, y: Int): T?
+internal class CuImmutableList2D<T> : CuAbstractList2D<T>() {
+    private val _entries = CuPos2ObjectMap<T>()
 
-    operator fun get(x: Int, y: Int, defaultValue: T): T
+    override fun isEmpty(): Boolean = _entries.isEmpty()
 
-    operator fun set(x: Int, y: Int, t: T): CuList2D<T>
+    override fun contains(t: T): Boolean = _entries.containsValue(t)
 
-    fun clear(): CuList2D<T>
-
-    fun remove(y: Int): CuList2D<T>
-
-    fun remove(x: Int, y: Int): CuList2D<T>
-
-    fun isEmpty(): Boolean
-
-    operator fun contains(t: T): Boolean
-
-    fun contains(y: Int, t: T): Boolean
-
-    fun <T> of(): CuList2D<T> {
-        return CuImmutableList2D()
+    override fun contains(y: Int, t: T): Boolean {
+        val map = _entries.retainAll(y)
+        return map.containsValue(t)
     }
+
+    override fun get(x: Int, y: Int): T? = _entries[x, y]
 }

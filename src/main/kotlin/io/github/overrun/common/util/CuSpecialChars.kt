@@ -22,25 +22,11 @@
  * SOFTWARE.
  */
 
-package io.github.overrun.commom.util.collection
+package io.github.overrun.common.util
 
-import io.github.overrun.commom.util.map.CuPos2ObjectMap
+import io.github.overrun.common.util.annotation.CuApi
 
-/**
- * @author squid233
- * @since 2020/11/08
- */
-internal class CuImmutableList2D<T> : CuAbstractList2D<T>() {
-    private val entries = CuPos2ObjectMap<T>()
-
-    override fun isEmpty(): Boolean = entries.isEmpty()
-
-    override fun contains(t: T): Boolean = entries.containsValue(t)
-
-    override fun contains(y: Int, t: T): Boolean {
-        val map = entries.retainAll(y)
-        return map.containsValue(t)
-    }
-
-    override fun get(x: Int, y: Int): T? = entries[x, y]
+@CuApi(since = "0.1.0")
+object CuSpecialChars {
+    const val ESCAPE = "\u001b"
 }
