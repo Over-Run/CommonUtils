@@ -24,10 +24,13 @@
 
 package io.github.overrun.common.util.collection;
 
+import io.github.overrun.common.util.annotation.CuApi;
+
 /**
  * @author squid233
  * @since 2020/11/08
  */
+@CuApi(since = "0.1.0")
 public class CuCollections {
     /**
      * Create an array by concise method.<br>
@@ -39,7 +42,7 @@ public class CuCollections {
      * @param t   Objects for array.
      * @param <T> Objects type.
      * @return An array.
-    </T> */
+     */
     @SafeVarargs
     public static <T> T[] arrayOf(T... t) {
         return t;

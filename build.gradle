@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'idea'
     id 'maven'
+    id 'signing'
     id 'maven-publish'
     id 'org.jetbrains.kotlin.jvm' version '1.4.10'
 }
@@ -31,4 +32,64 @@ test {
 
 compileKotlin {
     kotlinOptions.jvmTarget = '11'
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from 'build/docs/javadoc'
+}
+
+artifacts {
+    archives jar
+    archives sourcesJar
+    archives javadocJar
+}
+
+signing {
+    required { gradle.taskGraph.hasTask("uploadArchives") }
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { deployment -> signing.signPom(deployment) }
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots") {
+                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+            pom.project {
+                name = project.name
+                packaging 'jar'
+                description 'a java library'
+                url 'https://github.com/Over-Run/CommonUtils'
+                scm {
+                    url 'https://github.com/Over-Run/CommonUtils'
+                    connection 'https://github.com/Over-Run/CommonUtils.git'
+                    developerConnection 'git@github.com:Over-Run/CommonUtils.git'
+                }
+                licenses {
+                    license {
+                        name = 'MIT Licence'
+                        url 'https://raw.githubusercontent.com/Over-Run/CommonUtils/pre-alpha/LICENSE'
+                        distribution 'repo'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'squid233'
+                        name = 'squid233'
+                        email 'diamondsblocks@foxmail.com'
+                    }
+                }
+            }
+        }
+    }
 }
